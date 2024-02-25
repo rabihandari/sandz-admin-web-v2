@@ -11,9 +11,10 @@ const Navbar = () => {
   const pathname = usePathname();
   const { userProfile, menuItems } = useAppContext();
 
-  const currentMenuItem = menuItems.find((item) =>
-    pathname.includes(item.basePath),
-  );
+  const currentMenuItem = menuItems.find((item) => {
+    if (item.basePath === '/') return pathname === item.basePath;
+    else return pathname.includes(item.basePath);
+  });
 
   const { setUserProfile, handleLogout } = useAppContext();
 
