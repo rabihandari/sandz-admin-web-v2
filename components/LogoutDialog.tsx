@@ -7,16 +7,14 @@ import {
   DialogContentText,
 } from '@mui/material';
 import React from 'react';
-import { useRouter } from 'next/navigation';
-import { logoutUser } from '@/serverActions';
-import { auth } from '@/utils/firebase-config';
+import { useAppContext } from '@/context';
 
 interface Iprops {
   children: (handleOpen: () => void) => React.ReactNode;
 }
 
 const LogoutDialog: React.FC<Iprops> = ({ children }) => {
-  const router = useRouter();
+  const { handleLogout } = useAppContext();
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
   const handleClose = () => {
@@ -25,12 +23,6 @@ const LogoutDialog: React.FC<Iprops> = ({ children }) => {
 
   const handleOpen = () => {
     setIsOpen(true);
-  };
-
-  const handleLogout = async () => {
-    await logoutUser();
-    await auth.signOut();
-    router.push('/login');
   };
 
   return (

@@ -1,6 +1,8 @@
 import { initializeApp, getApps, cert } from 'firebase-admin/app';
 
-const firebaseAdminConfig = {
+const ADMIN_APP_NAME = 'firebase-frameworks';
+
+export const firebaseAdminConfig = {
   credential: cert({
     projectId: process.env.FIREBASE_ADMIN_PROJECT_ID,
     clientEmail: process.env.FIREBASE_ADMIN_CLIENT_EMAIL,
@@ -9,7 +11,9 @@ const firebaseAdminConfig = {
 };
 
 export function customInitApp() {
-  if (getApps().length <= 0) {
-    initializeApp(firebaseAdminConfig);
+  if (getApps().length) {
+    return getApps()[0];
   }
+
+  return initializeApp(firebaseAdminConfig, ADMIN_APP_NAME);
 }

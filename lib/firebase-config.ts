@@ -21,12 +21,19 @@ const firebaseConfig = {
 
 const firebaseApp =
   getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
-const auth = getAuth(firebaseApp);
+const appAuth = getAuth(firebaseApp);
 const db = getFirestore(firebaseApp);
 const storage = getStorage(firebaseApp);
 
 const onAuthStateChanged = (cb: NextOrObserver<User>) => {
-  return _onAuthStateChanged(auth, cb);
+  return _onAuthStateChanged(appAuth, cb);
 };
 
-export { db, auth, storage, onAuthStateChanged };
+export {
+  db,
+  appAuth,
+  storage,
+  firebaseApp,
+  firebaseConfig,
+  onAuthStateChanged,
+};

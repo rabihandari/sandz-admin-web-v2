@@ -1,5 +1,3 @@
-import { User } from 'firebase/auth';
-
 export interface IloginForm {
   email: string;
   password: string;
@@ -15,9 +13,10 @@ export interface Iuser {
 }
 
 export interface Icontext {
-  user: User | null;
   menuItems: ImenuItem[];
   userProfile: Iuser | null;
+  handleLogout: () => Promise<void>;
+  setUserProfile: React.Dispatch<React.SetStateAction<Iuser | null>>;
 }
 
 export interface ImenuItem {
@@ -31,4 +30,10 @@ export interface ImenuItem {
 export interface ImenuItemChildren {
   path: string;
   title: string;
+}
+
+export interface Iarea {
+  id: string;
+  name: string;
+  imageUrl: string;
 }

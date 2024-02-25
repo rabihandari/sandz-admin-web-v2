@@ -1,8 +1,10 @@
 'use client';
 
 import React from 'react';
-import { Icontext, ImenuItem } from '@/types';
-import { useUserSession } from '@/hooks/useUserSession';
+import { useRouter } from 'next/navigation';
+import { logoutUser } from '@/serverActions';
+import { appAuth } from '@/lib/firebase-config';
+import { Icontext, ImenuItem, Iuser } from '@/types';
 import {
   Gauge,
   AreaChart,
@@ -12,9 +14,10 @@ import {
 } from 'lucide-react';
 
 const Context = React.createContext<Icontext>({
-  user: null,
   menuItems: [],
   userProfile: null,
+  setUserProfile: () => {},
+  handleLogout: async () => {},
 });
 
 interface Iprops {
@@ -22,7 +25,14 @@ interface Iprops {
 }
 
 export const ContextProvider: React.FC<Iprops> = ({ children }) => {
-  const { user, userProfile } = useUserSession();
+  const router = useRouter();
+  const [userProfile, setUserProfile] = React.useState<Iuser | null>(null);
+
+  const handleLogout = async () => {
+    await logoutUser();
+    await appAuth.signOut();
+    router.push('/login');
+  };
 
   const menuItems: ImenuItem[] = [
     {
@@ -94,7 +104,9 @@ export const ContextProvider: React.FC<Iprops> = ({ children }) => {
   ];
 
   return (
-    <Context.Provider value={{ user, userProfile, menuItems }}>
+    <Context.Provider
+      value={{ userProfile, setUserProfile, menuItems, handleLogout }}
+    >
       {children}
     </Context.Provider>
   );

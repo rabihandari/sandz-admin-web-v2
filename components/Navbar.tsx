@@ -5,6 +5,7 @@ import { Bell, Mail } from 'lucide-react';
 import { useAppContext } from '@/context';
 import { usePathname } from 'next/navigation';
 import { Avatar, Divider } from '@mui/material';
+import { checkUserToken } from '@/serverActions';
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -13,6 +14,19 @@ const Navbar = () => {
   const currentMenuItem = menuItems.find((item) =>
     pathname.includes(item.basePath),
   );
+
+  const { setUserProfile, handleLogout } = useAppContext();
+
+  React.useEffect(() => {
+    (async () => {
+      const res = await checkUserToken();
+      if (!res) {
+        await handleLogout();
+      } else {
+        setUserProfile(res);
+      }
+    })();
+  }, []);
 
   return (
     <div className='bg-white h-[97px] flex items-center justify-between px-10'>

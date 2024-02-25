@@ -2,9 +2,10 @@
 
 import React from 'react';
 import { IloginForm } from '@/types';
+import { useAppContext } from '@/context';
 import { loginUser } from '@/serverActions';
 import { useRouter } from 'next/navigation';
-import { auth } from '@/utils/firebase-config';
+import { appAuth } from '@/lib/firebase-config';
 import { loginSchema } from '@/schemas/loginSchema';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -37,6 +38,7 @@ const LoginPage = () => {
     resolver: yupResolver(loginSchema),
   });
   const router = useRouter();
+  const { setUserProfile } = useAppContext();
   const [errMessage, setErrMessage] = React.useState<string>('');
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [isRememberMe, setIsRememberMe] = React.useState<boolean>(false);
@@ -61,14 +63,19 @@ const LoginPage = () => {
 
     try {
       setIsLoading(true);
-      const userCred = await signInWithEmailAndPassword(auth, email, password);
+      const userCred = await signInWithEmailAndPassword(
+        appAuth,
+        email,
+        password,
+      );
       const token = await userCred.user.getIdToken();
       const user = await loginUser(token);
 
       if (user) {
+        setUserProfile(user);
         router.push('/');
       } else {
-        await auth.signOut();
+        await appAuth.signOut();
       }
     } catch (err: any) {
       setErrMessage(firebaseErrorMap[err.code] || firebaseErrorMap.default);

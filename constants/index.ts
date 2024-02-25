@@ -9,3 +9,4 @@ export const firebaseErrorMap: { [key: string]: string } = {
 
 // COLLECTIONS
 export const USERS_COLLECTION = 'users';
+export const AREAS_COLLECTION = 'areas';
