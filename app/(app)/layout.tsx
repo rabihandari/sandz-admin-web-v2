@@ -12,7 +12,7 @@ const AppLayout = ({
   const theme = createTheme({
     palette: {
       primary: {
-        main: '#6B8EF2',
+        main: '#3F6BFC',
       },
     },
   });

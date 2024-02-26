@@ -37,3 +37,9 @@ export interface Iarea {
   name: string;
   imageUrl: string;
 }
+
+export interface ItableColumn<T = any> {
+  key: keyof T;
+  label: string;
+  component?: (item: T) => React.ReactNode;
+}

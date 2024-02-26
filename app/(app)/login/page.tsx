@@ -132,7 +132,7 @@ const LoginPage = () => {
               disableElevation
               variant='contained'
               disabled={isLoading}
-              className='bg-[#6B8EF2]'
+              className='bg-[#3F6BFC]'
             >
               Submit
             </Button>

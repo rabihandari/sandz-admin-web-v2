@@ -1,10 +1,11 @@
-import { AREAS_COLLECTION } from '@/constants';
-import { getDocuments } from '@/firebase';
+import React from 'react';
 import { Iarea } from '@/types';
 import { NextPage } from 'next';
-import React from 'react';
+import AreaList from './AreaList';
+import { getDocuments } from '@/firebase';
+import { AREAS_COLLECTION } from '@/constants';
 
-const AreaList: NextPage = async () => {
+const AreaListPage: NextPage = async () => {
   let data: Iarea[] = [];
 
   try {
@@ -13,11 +14,9 @@ const AreaList: NextPage = async () => {
 
   return (
     <div className='p-10'>
-      {data.map((item) => (
-        <p key={item.id}>{item.name}</p>
-      ))}
+      <AreaList areas={data} />
     </div>
   );
 };
 
-export default AreaList;
+export default AreaListPage;
