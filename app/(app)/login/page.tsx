@@ -3,7 +3,7 @@
 import React from 'react';
 import { IloginForm } from '@/types';
 import { useAppContext } from '@/context';
-import { loginUser } from '@/serverActions';
+import { loginUser } from '@/firebase/auth';
 import { useRouter } from 'next/navigation';
 import { appAuth } from '@/lib/firebase-config';
 import { loginSchema } from '@/schemas/loginSchema';
@@ -132,7 +132,7 @@ const LoginPage = () => {
               disableElevation
               variant='contained'
               disabled={isLoading}
-              className='bg-[#3F6BFC]'
+              className='bg-primary'
             >
               Submit
             </Button>

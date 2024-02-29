@@ -7,12 +7,13 @@ import {
   DialogContentText,
 } from '@mui/material';
 import React from 'react';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 interface Iprops {
   title: string;
   message: string;
-  handleConfirm: () => void;
   confirmButtonLabel: string;
+  handleConfirm: () => Promise<void>;
   children: (handleOpen: () => void) => React.ReactNode;
 }
 
@@ -24,6 +25,14 @@ const CustomDialog: React.FC<Iprops> = ({
   confirmButtonLabel,
 }) => {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+
+  const onConfirm = async () => {
+    setIsLoading(true);
+    await handleConfirm();
+    handleClose();
+    setIsLoading(false);
+  };
 
   const handleClose = () => {
     setIsOpen(false);
@@ -45,14 +54,15 @@ const CustomDialog: React.FC<Iprops> = ({
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button
+          <LoadingButton
             autoFocus
             color='error'
             variant='outlined'
-            onClick={handleConfirm}
+            onClick={onConfirm}
+            loading={isLoading}
           >
             {confirmButtonLabel}
-          </Button>
+          </LoadingButton>
         </DialogActions>
       </Dialog>
     </>

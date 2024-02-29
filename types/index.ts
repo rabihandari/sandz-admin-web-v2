@@ -43,3 +43,8 @@ export interface ItableColumn<T = any> {
   label: string;
   component?: (item: T) => React.ReactNode;
 }
+
+export interface IareaForm {
+  image: File | string;
+  name: string;
+}

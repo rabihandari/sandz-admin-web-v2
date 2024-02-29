@@ -36,7 +36,7 @@ export const useDataTable = <T>(allData: T[], searchBy: keyof T) => {
       setTotalCount(filteredData.length);
       setData(sliceArray(filteredData, currentPage, pageSize));
     }
-  }, [pageSize, currentPage, searchTerm]);
+  }, [pageSize, currentPage, searchTerm, allData]);
 
   return {
     data,

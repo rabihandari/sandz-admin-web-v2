@@ -14,6 +14,14 @@ const AppLayout = ({
       primary: {
         main: '#3F6BFC',
       },
+      secondary: {
+        main: '#3F6BFC1A',
+      },
+    },
+    typography: {
+      button: {
+        textTransform: 'none',
+      },
     },
   });
 

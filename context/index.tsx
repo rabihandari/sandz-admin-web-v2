@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { useRouter } from 'next/navigation';
-import { logoutUser } from '@/serverActions';
+import { logoutUser } from '@/firebase/auth';
 import { appAuth } from '@/lib/firebase-config';
 import { Icontext, ImenuItem, Iuser } from '@/types';
 import {

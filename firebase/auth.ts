@@ -1,16 +1,19 @@
 'use server';
 
 import { Iuser } from '@/types';
-import { cookies } from 'next/headers';
-import { initializeApp } from 'firebase/app';
 import { USERS_COLLECTION } from '@/constants';
+import { FirebaseApp, initializeApp } from 'firebase/app';
 import { customInitApp } from '../lib/firebase-admin-config';
-import { getAuth as getAdminAuth } from 'firebase-admin/auth';
 import { getAuth, signInWithCustomToken } from 'firebase/auth';
-import { appAuth, firebaseApp, firebaseConfig } from '@/lib/firebase-config';
-import { getFirestore as getAdminFirestore } from 'firebase-admin/firestore';
+import { firebaseApp, firebaseConfig } from '@/lib/firebase-config';
 
 export const loginUser = async (token: string): Promise<Iuser | undefined> => {
+  // dynamic import
+  const { getAuth: getAdminAuth } = await import('firebase-admin/auth');
+  const { getFirestore: getAdminFirestore } = await import(
+    'firebase-admin/firestore'
+  );
+
   const adminApp = customInitApp();
   const adminAuth = getAdminAuth(adminApp);
   const adminFirestore = getAdminFirestore(adminApp);
@@ -31,10 +34,14 @@ export const loginUser = async (token: string): Promise<Iuser | undefined> => {
   if (!user || user?.role !== 'admin') return;
 
   const expiresIn = 60 * 60 * 24 * 14 * 1000;
+  // const expiresIn = 300000;
 
   const sessionCookie = await adminAuth.createSessionCookie(token, {
     expiresIn,
   });
+
+  // dynamic import
+  const { cookies } = await import('next/headers');
 
   //Add the cookie to the browser
   cookies().set({
@@ -49,10 +56,19 @@ export const loginUser = async (token: string): Promise<Iuser | undefined> => {
 };
 
 export const checkUserToken = async () => {
+  // dynamic import
+  const { cookies } = await import('next/headers');
+
   const token = cookies().get('session')?.value;
 
   try {
     if (!token) return;
+
+    // dynamic import
+    const { getAuth: getAdminAuth } = await import('firebase-admin/auth');
+    const { getFirestore: getAdminFirestore } = await import(
+      'firebase-admin/firestore'
+    );
 
     const adminApp = customInitApp();
     const adminAuth = getAdminAuth(adminApp);
@@ -74,64 +90,66 @@ export const checkUserToken = async () => {
     return;
   }
 };
+
 export const logoutUser = async () => {
+  // dynamic import
+  const { cookies } = await import('next/headers');
+
   cookies().delete('session');
   return;
 };
 
-export async function getAuthenticatedAppForUser(
-  session: string | undefined = undefined,
-) {
-  if (typeof window !== 'undefined') {
-    return { app: firebaseApp, user: appAuth.currentUser?.toJSON() };
-  }
+export const getAuthenticatedAppForUser =
+  async (): Promise<FirebaseApp | null> => {
+    // handle client side call
+    if (typeof window !== 'undefined') {
+      return firebaseApp;
+    }
 
-  const adminApp = customInitApp();
+    const session = await getAppRouterSession();
 
-  const adminAuth = getAdminAuth(adminApp);
-  const noSessionReturn = { app: null, currentUser: null };
+    if (!session) return null;
 
-  if (!session) {
-    // if no session cookie was passed, try to get from next/headers for app router
-    session = await getAppRouterSession();
+    // dynamic import
+    const { getAuth: getAdminAuth } = await import('firebase-admin/auth');
 
-    if (!session) return noSessionReturn;
-  }
+    const adminApp = customInitApp();
+    const adminAuth = getAdminAuth(adminApp);
 
-  const decodedIdToken = await adminAuth.verifySessionCookie(session);
+    const decodedIdToken = await adminAuth.verifySessionCookie(session);
 
-  const app = initializeAuthenticatedApp(decodedIdToken.uid);
-  const auth = getAuth(app);
+    const app = initializeAuthenticatedApp(decodedIdToken.uid);
+    const auth = getAuth(app);
 
-  // handle revoked tokens
-  const isRevoked = !(await adminAuth
-    .verifySessionCookie(session, true)
-    .catch((e) => console.error(e.message)));
-  if (isRevoked) return noSessionReturn;
+    // handle revoked tokens
+    const isRevoked = !(await adminAuth
+      .verifySessionCookie(session, true)
+      .catch((e) => console.error(e.message)));
 
-  // authenticate with custom token
-  if (auth.currentUser?.uid !== decodedIdToken.uid) {
-    // TODO(jamesdaniels) get custom claims
-    const customToken = await adminAuth
-      .createCustomToken(decodedIdToken.uid)
-      .catch((e) => console.error(e.message));
+    if (isRevoked) return null;
 
-    if (!customToken) return noSessionReturn;
+    // authenticate with custom token
+    if (auth.currentUser?.uid !== decodedIdToken.uid) {
+      // TODO(jamesdaniels) get custom claims
+      const customToken = await adminAuth
+        .createCustomToken(decodedIdToken.uid)
+        .catch((e) => console.error(e.message));
 
-    await signInWithCustomToken(auth, customToken);
-  }
+      if (!customToken) return null;
 
-  return { app, currentUser: auth.currentUser };
-}
+      await signInWithCustomToken(auth, customToken);
+    }
+
+    return app;
+  };
 
 async function getAppRouterSession() {
-  // dynamically import to prevent import errors in pages router
+  // dynamic import
   const { cookies } = await import('next/headers');
 
   try {
     return cookies().get('session')?.value;
   } catch (error) {
-    // cookies() throws when called from pages router
     return undefined;
   }
 }

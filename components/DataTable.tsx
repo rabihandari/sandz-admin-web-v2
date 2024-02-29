@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Wrapper from './Wrapper';
 import { ItableColumn } from '@/types';
 import CustomDialog from './CustomDialog';
 import { pageSizeOptions } from '@/constants';
@@ -31,8 +32,8 @@ interface Iprops {
   buttonLabel?: string;
   onButtonClick?: () => void;
   columns: ItableColumn<any>[];
+  onEditClick?: (item: any) => void;
   handleChangeSize: (size: number) => void;
-  onEditClick?: (item: any) => Promise<void>;
   handleDelete: (item: any) => Promise<void>;
   setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
@@ -56,7 +57,7 @@ const DataTable: React.FC<Iprops> = ({
   handleChangeSize,
 }) => {
   return (
-    <div className='bg-white shadow-lg p-5 rounded-md flex flex-col gap-4'>
+    <Wrapper>
       <div className='flex items-center justify-between gap-5'>
         <TextField
           type='text'
@@ -82,7 +83,7 @@ const DataTable: React.FC<Iprops> = ({
             <Button
               variant='contained'
               onClick={onButtonClick}
-              className='bg-[#3F6BFC] flex items-center gap-2 h-[56px]'
+              className='bg-primary flex items-center gap-2 h-[56px]'
             >
               <Plus size={20} />
               {buttonLabel}
@@ -156,7 +157,7 @@ const DataTable: React.FC<Iprops> = ({
           onChange={(_e, page) => setCurrentPage(page)}
         />
       </div>
-    </div>
+    </Wrapper>
   );
 };
 
