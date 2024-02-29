@@ -86,7 +86,11 @@ const AddAreaForm: React.FC<Iprops> = ({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className='flex-grow'>
-      <div className={isInPannel ? 'flex flex-col justify-between h-full' : ''}>
+      <div
+        className={
+          isInPannel ? 'flex flex-col justify-between h-full gap-5' : ''
+        }
+      >
         <div className='flex flex-col gap-5'>
           {!isInPannel && (
             <FormHeader

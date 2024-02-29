@@ -17,7 +17,7 @@ const CustomDrawer: React.FC<Iprops> = ({
 }) => {
   return (
     <Drawer anchor={'right'} open={open} onClose={handleClose}>
-      <div className='p-5 h-full flex flex-col'>
+      <div className='p-5 h-full flex flex-col gap-8'>
         <div className='flex justify-between items-center'>
           <h3 className='text-2xl font-medium'>{title}</h3>
           <div className='w-[46px] cursor-pointer h-[46px] bg-[#F1F1F2] rounded-lg flex items-center justify-center'>
