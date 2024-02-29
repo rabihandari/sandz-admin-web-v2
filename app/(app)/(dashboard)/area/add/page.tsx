@@ -4,7 +4,7 @@ import React from 'react';
 import { NextPage } from 'next';
 import { Iarea } from '@/types';
 import { createDocument } from '@/firebase';
-import AddAreaForm from '@/components/form/AddAreaForm';
+import AddAreaForm from '@/components/forms/AddAreaForm';
 import { AREAS_COLLECTION, AREA_LIST_ROUTE } from '@/constants';
 
 const AddAreaPage: NextPage = () => {

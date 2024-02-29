@@ -8,7 +8,7 @@ import { Iarea, ItableColumn } from '@/types';
 import DataTable from '@/components/DataTable';
 import { useDataTable } from '@/hooks/useDataTable';
 import CustomDrawer from '@/components/CustomDrawer';
-import AddAreaForm from '@/components/form/AddAreaForm';
+import AddAreaForm from '@/components/forms/AddAreaForm';
 import { useCatchErrors } from '@/hooks/useCatchErrors';
 import { deleteDocument, updateDocument } from '@/firebase';
 import { AREAS_COLLECTION, AREA_LIST_ROUTE } from '@/constants';
