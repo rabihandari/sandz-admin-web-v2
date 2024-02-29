@@ -68,7 +68,7 @@ const AddAreaForm: React.FC<Iprops> = ({
 
       await handleSubmitForm(
         {
-          name,
+          name: name.trim(),
           imageUrl,
         },
         defaultValues?.id,
