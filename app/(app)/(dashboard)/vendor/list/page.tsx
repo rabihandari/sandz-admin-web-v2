@@ -28,7 +28,7 @@ const VendorListPage: NextPage = async () => {
 
   return (
     <div className='p-10'>
-      <VendorList areas={data} />
+      <VendorList vendors={data} />
     </div>
   );
 };

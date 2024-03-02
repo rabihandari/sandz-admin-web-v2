@@ -10,21 +10,17 @@ import { Ivendor, ItableColumn } from '@/types';
 import { useDataTable } from '@/hooks/useDataTable';
 import CustomDrawer from '@/components/CustomDrawer';
 import { useCatchErrors } from '@/hooks/useCatchErrors';
-import { deleteDocument, deleteUserAccount, updateDocument } from '@/firebase';
 import AddVendorForm from '@/components/forms/AddVendorForm';
-import {
-  AREA_LIST_ROUTE,
-  USERS_COLLECTION,
-  VENDOR_LIST_ROUTE,
-} from '@/constants';
+import { USERS_COLLECTION, VENDOR_LIST_ROUTE } from '@/constants';
+import { deleteDocument, deleteUserAccount, updateDocument } from '@/firebase';
 
 interface Iprops {
-  areas: Ivendor[];
+  vendors: Ivendor[];
 }
 
-const VendorList: React.FC<Iprops> = ({ areas }) => {
+const VendorList: React.FC<Iprops> = ({ vendors }) => {
   const router = useRouter();
-  const [initialData, setInitialData] = React.useState<Ivendor[]>(areas);
+  const [initialData, setInitialData] = React.useState<Ivendor[]>(vendors);
   const { errorMessage, handleCatchError, setDefaultError, setErrorMessage } =
     useCatchErrors();
   const [vendorToUpdate, setVendorToUpdate] = React.useState<Ivendor | null>(
@@ -49,6 +45,8 @@ const VendorList: React.FC<Iprops> = ({ areas }) => {
   const handleEditClick = (vendor: Ivendor) => setVendorToUpdate(vendor);
 
   const handleDelete = async ({ uid, photoUrl }: Ivendor) => {
+    setErrorMessage('');
+
     try {
       await deleteDocument(uid, USERS_COLLECTION, photoUrl, VENDOR_LIST_ROUTE);
       setInitialData((oldData) =>
@@ -65,38 +63,32 @@ const VendorList: React.FC<Iprops> = ({ areas }) => {
     uid?: string,
     updatedEmail?: string,
   ) => {
-    setErrorMessage('');
-
     // this should never be the case, just for type correction
     if (!uid) {
       setDefaultError();
       return;
     }
 
-    try {
-      const updatedArea = (await updateDocument(
-        uid,
-        USERS_COLLECTION,
-        vendor,
-        AREA_LIST_ROUTE,
-        updatedEmail,
-      )) as Ivendor | undefined;
+    const updatedArea = (await updateDocument(
+      uid,
+      USERS_COLLECTION,
+      vendor,
+      VENDOR_LIST_ROUTE,
+      updatedEmail,
+    )) as Ivendor | undefined;
 
-      if (!updatedArea) {
-        setDefaultError();
-        return;
-      }
+    handleClose();
 
-      handleClose();
-
-      setInitialData((oldData) =>
-        oldData.map((vendor) =>
-          vendor.uid === uid ? { ...vendor, ...updatedArea } : vendor,
-        ),
-      );
-    } catch (err: any) {
-      await handleCatchError(err);
+    if (!updatedArea) {
+      setDefaultError();
+      return;
     }
+
+    setInitialData((oldData) =>
+      oldData.map((vendor) =>
+        vendor.uid === uid ? { ...vendor, ...updatedArea } : vendor,
+      ),
+    );
   };
 
   const columns: ItableColumn<Ivendor>[] = [

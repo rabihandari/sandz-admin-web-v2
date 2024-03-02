@@ -42,6 +42,8 @@ const AreaList: React.FC<Iprops> = ({ areas }) => {
   const handleEditClick = (area: Iarea) => setAreaToUpdate(area);
 
   const handleDelete = async ({ id, imageUrl }: Iarea) => {
+    setErrorMessage('');
+
     try {
       await deleteDocument(id, AREAS_COLLECTION, imageUrl, AREA_LIST_ROUTE);
       setInitialData((oldData) => oldData.filter((area) => area.id !== id));
@@ -51,35 +53,29 @@ const AreaList: React.FC<Iprops> = ({ areas }) => {
   };
 
   const handleSubmit = async (area: Omit<Iarea, 'id'>, id?: string) => {
-    setErrorMessage('');
-
     // this should never be the case, just for type correction
     if (!id) {
       setDefaultError();
       return;
     }
 
-    try {
-      const updatedArea = (await updateDocument(
-        id,
-        AREAS_COLLECTION,
-        area,
-        AREA_LIST_ROUTE,
-      )) as Iarea | undefined;
+    const updatedArea = (await updateDocument(
+      id,
+      AREAS_COLLECTION,
+      area,
+      AREA_LIST_ROUTE,
+    )) as Iarea | undefined;
 
-      if (!updatedArea) {
-        setDefaultError();
-        return;
-      }
+    handleClose();
 
-      handleClose();
-
-      setInitialData((oldData) =>
-        oldData.map((area) => (area.id === id ? updatedArea : area)),
-      );
-    } catch (err: any) {
-      await handleCatchError(err);
+    if (!updatedArea) {
+      setDefaultError();
+      return;
     }
+
+    setInitialData((oldData) =>
+      oldData.map((area) => (area.id === id ? updatedArea : area)),
+    );
   };
 
   const columns: ItableColumn<Iarea>[] = [

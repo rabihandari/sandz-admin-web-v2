@@ -4,6 +4,8 @@ export const firebaseErrorMap: { [key: string]: string } = {
   'auth/invalid-credential': 'Invalid email or password.',
   'auth/session-cookie-expired': 'Session expired, please login again.',
   'Firebase: Error (auth/email-already-in-use).': 'Email already used.',
+  'The email address is already in use by another account.':
+    'Email already used.',
 
   default: 'An error occured, please try again later.',
 };
