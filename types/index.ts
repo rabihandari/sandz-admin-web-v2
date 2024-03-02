@@ -48,3 +48,24 @@ export interface IareaForm {
   image: File | string;
   name: string;
 }
+
+export interface IvendorForm {
+  type: string;
+  displayName: string;
+  emailAddress: string;
+  mobileNumber: string;
+  photo: File | string;
+}
+
+export interface Ivendor {
+  uid: string;
+  role: string;
+  type: string;
+  photoUrl: string;
+  displayName: string;
+  emailAddress: string;
+  mobileNumber: string;
+  totalOrders?: number;
+  isFirstLogin?: boolean;
+  createdAt?: Date;
+}

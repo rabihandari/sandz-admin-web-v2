@@ -76,7 +76,7 @@ const AddAreaForm: React.FC<Iprops> = ({
 
       resetForm();
     } catch (err: any) {
-      await handleCatchError(err.message);
+      await handleCatchError(err);
     } finally {
       setIsLoading(false);
     }

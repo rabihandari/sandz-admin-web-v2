@@ -43,10 +43,10 @@ const AreaList: React.FC<Iprops> = ({ areas }) => {
 
   const handleDelete = async ({ id, imageUrl }: Iarea) => {
     try {
-      await deleteDocument(id, AREAS_COLLECTION, imageUrl, 'area/list');
+      await deleteDocument(id, AREAS_COLLECTION, imageUrl, AREA_LIST_ROUTE);
       setInitialData((oldData) => oldData.filter((area) => area.id !== id));
     } catch (err: any) {
-      await handleCatchError(err.message);
+      await handleCatchError(err);
     }
   };
 
@@ -78,7 +78,7 @@ const AreaList: React.FC<Iprops> = ({ areas }) => {
         oldData.map((area) => (area.id === id ? updatedArea : area)),
       );
     } catch (err: any) {
-      await handleCatchError(err.message);
+      await handleCatchError(err);
     }
   };
 

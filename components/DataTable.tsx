@@ -107,7 +107,7 @@ const DataTable: React.FC<Iprops> = ({
           <TableBody>
             {data.map((row) => (
               <TableRow
-                key={row.id}
+                key={row.id || row.uid}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 {columns.map(({ key, component }, index) => (

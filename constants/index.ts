@@ -3,6 +3,7 @@ export const LOCAL_STORAGE_EMAIL_KEY: string = 'email';
 export const firebaseErrorMap: { [key: string]: string } = {
   'auth/invalid-credential': 'Invalid email or password.',
   'auth/session-cookie-expired': 'Session expired, please login again.',
+  'Firebase: Error (auth/email-already-in-use).': 'Email already used.',
 
   default: 'An error occured, please try again later.',
 };
@@ -31,9 +32,41 @@ export const pageSizeOptions = [
   },
 ];
 
+export const DEFAULT_PASSWORD = '123456';
+
 // COLLECTIONS
 export const USERS_COLLECTION = 'users';
 export const AREAS_COLLECTION = 'areas';
+export const RESERVATIONS_COLLECTION = 'reservations';
+export const HUB_COLLECTION = 'hub';
 
 // ROUTES
 export const AREA_LIST_ROUTE = '/area/list';
+export const CUSTOMER_LIST_ROUTE = '/customer/list';
+export const VENDOR_LIST_ROUTE = '/vendor/list';
+
+export const planOptions = [
+  {
+    key: 1,
+    value: 'Basic',
+    label: 'Basic',
+  },
+];
+
+export const vendorTypeOptions = [
+  {
+    key: 1,
+    value: 'Entertainment',
+    label: 'Entertainment',
+  },
+  {
+    key: 2,
+    value: 'Catering',
+    label: 'Catering',
+  },
+  {
+    key: 3,
+    value: 'Market',
+    label: 'Market',
+  },
+];

@@ -44,7 +44,13 @@ const DropzoneComponent: React.FC<Iprops> = ({ file, setFile }) => {
       <input {...getInputProps()} accept='image/*' />
       {url ? (
         <>
-          <Image width={300} height={300} alt={fileName} src={url} />
+          <Image
+            src={url}
+            width={300}
+            height={300}
+            alt={fileName}
+            className='rounded-lg'
+          />
           <Button
             disableElevation
             color='secondary'

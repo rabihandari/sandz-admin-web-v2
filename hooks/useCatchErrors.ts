@@ -8,11 +8,14 @@ export const useCatchErrors = () => {
 
   const setDefaultError = () => setErrorMessage(firebaseErrorMap.default);
 
-  const handleCatchError = async (error: string) => {
-    if (errorCodes[error] === errorCodes[SESSION_EXPIRED]) {
+  const handleCatchError = async (error: any) => {
+    const errorMsg = error.code || error.message;
+
+    if (errorCodes[errorMsg] === errorCodes[SESSION_EXPIRED]) {
       setErrorMessage(firebaseErrorMap['auth/session-cookie-expired']);
       await handleLogout();
-    } else setErrorMessage(firebaseErrorMap[error] || firebaseErrorMap.default);
+    } else
+      setErrorMessage(firebaseErrorMap[errorMsg] || firebaseErrorMap.default);
   };
 
   return {
