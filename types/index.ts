@@ -69,3 +69,22 @@ export interface Ivendor {
   isFirstLogin?: boolean;
   createdAt?: Date;
 }
+
+export interface IcustomerForm {
+  plan: string;
+  displayName: string;
+  emailAddress: string;
+  mobileNumber: string;
+}
+
+export interface Icustomer {
+  uid: string;
+  role: string;
+  plan: string;
+  displayName: string;
+  emailAddress: string;
+  mobileNumber: string;
+  totalReservations?: number;
+  isFirstLogin?: boolean;
+  createdAt?: Date;
+}

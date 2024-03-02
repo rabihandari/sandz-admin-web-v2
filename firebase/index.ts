@@ -78,22 +78,18 @@ export const updateDocument = async (
 
   const docRef = doc(firestore, collectionName, id);
 
-  await updateDoc(docRef, data);
-
   if (updatedEmail) {
-    try {
-      const { getAuth: getAdminAuth } = await import('firebase-admin/auth');
+    const { getAuth: getAdminAuth } = await import('firebase-admin/auth');
 
-      const adminApp = customInitApp();
-      const auth = getAdminAuth(adminApp);
+    const adminApp = customInitApp();
+    const auth = getAdminAuth(adminApp);
 
-      await auth.updateUser(id, {
-        email: updatedEmail,
-      });
-    } catch (err) {
-      console.log({ err });
-    }
+    await auth.updateUser(id, {
+      email: updatedEmail,
+    });
   }
+
+  await updateDoc(docRef, data);
 
   const updatedDoc = await getDoc(docRef);
   const updatedData = updatedDoc.exists()
