@@ -152,6 +152,8 @@ export const createAccount = async <T extends { emailAddress: string }>(
     user.user.uid,
     'uid',
   );
+
+  return user.user.uid;
 };
 
 export const deleteDocument = async (

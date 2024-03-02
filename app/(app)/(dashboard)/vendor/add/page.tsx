@@ -2,18 +2,13 @@
 
 import React from 'react';
 import { NextPage } from 'next';
+import { createVendor } from '.';
 import { Ivendor } from '@/types';
-import { createAccount } from '@/firebase';
 import AddVendorForm from '@/components/forms/AddVendorForm';
-import { USERS_COLLECTION, VENDOR_LIST_ROUTE } from '@/constants';
 
 const AddCustomerPage: NextPage = () => {
   const handleSubmit = async (vendor: Omit<Ivendor, 'uid'>) => {
-    await createAccount(
-      USERS_COLLECTION,
-      { ...vendor, isFirstLogin: true },
-      VENDOR_LIST_ROUTE,
-    );
+    await createVendor(vendor);
   };
 
   return (
