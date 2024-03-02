@@ -88,3 +88,15 @@ export interface Icustomer {
   isFirstLogin?: boolean;
   createdAt?: Date;
 }
+
+export interface Iclient {
+  uid: string;
+  role: string;
+  photoUrl: string;
+  displayName: string;
+  emailAddress: string;
+  mobileNumber: string;
+  totalReservations?: number;
+  totalSpent?: number;
+  createdAt?: Date;
+}

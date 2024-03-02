@@ -46,6 +46,7 @@ export const HUB_COLLECTION = 'hub';
 export const AREA_LIST_ROUTE = '/area/list';
 export const CUSTOMER_LIST_ROUTE = '/customer/list';
 export const VENDOR_LIST_ROUTE = '/vendor/list';
+export const CLIENT_LIST_ROUTE = '/client/list';
 
 export const planOptions = [
   {
