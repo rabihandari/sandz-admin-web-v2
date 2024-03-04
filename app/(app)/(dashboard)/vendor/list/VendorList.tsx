@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
 import { Alert } from '@mui/material';
 import { format } from 'date-fns/format';
 import { useRouter } from 'next/navigation';
@@ -97,7 +96,7 @@ const VendorList: React.FC<Iprops> = ({ vendors }) => {
       label: 'Vendor',
       component: ({ photoUrl, displayName, emailAddress }) => (
         <div className='flex items-center gap-4'>
-          <Image
+          <img
             width={50}
             height={50}
             src={photoUrl}

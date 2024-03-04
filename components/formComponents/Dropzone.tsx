@@ -1,5 +1,4 @@
 import React from 'react';
-import Image from 'next/image';
 import { ArrowUpToLine } from 'lucide-react';
 import { useDropzone } from 'react-dropzone';
 import { Typography, Button } from '@mui/material';
@@ -44,7 +43,7 @@ const DropzoneComponent: React.FC<Iprops> = ({ file, setFile }) => {
       <input {...getInputProps()} accept='image/*' />
       {url ? (
         <>
-          <Image
+          <img
             src={url}
             width={300}
             height={300}
