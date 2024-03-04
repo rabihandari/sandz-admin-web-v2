@@ -9,8 +9,8 @@ import { checkUserToken } from '@/firebase/auth';
 
 const Navbar = () => {
   const pathname = usePathname();
-  const { userProfile, menuItems } = useAppContext();
-  const { setUserProfile, handleLogout } = useAppContext();
+  const { userProfile, menuItems, setUserProfile, handleLogout } =
+    useAppContext();
 
   const currentMenuItem = menuItems.find((item) => {
     if (item.basePath === '/') return pathname === item.basePath;
