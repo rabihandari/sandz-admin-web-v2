@@ -54,7 +54,7 @@ const DropzoneComponent: React.FC<Iprops> = ({ file, setFile }) => {
             disableElevation
             color='secondary'
             variant='contained'
-            className='bg-secondary text-primary'
+            sx={{ backgroundColor: '#3F6BFC1A', color: '#3F6BFC' }}
           >
             Replace image
           </Button>
@@ -67,14 +67,14 @@ const DropzoneComponent: React.FC<Iprops> = ({ file, setFile }) => {
           <Typography
             variant='body2'
             gutterBottom
-            className='text-gray text-lg'
+            sx={{ color: '#5D596C', opacity: 0.6, fontSize: '1.125rem' }}
           >
             Drag and drop your image here
           </Typography>
           <Typography
             variant='body2'
             gutterBottom
-            className='text-gray opacity-60 text-xl'
+            sx={{ color: '#5D596C', opacity: 0.6, fontSize: '1.25rem' }}
           >
             Or
           </Typography>
@@ -82,7 +82,7 @@ const DropzoneComponent: React.FC<Iprops> = ({ file, setFile }) => {
             disableElevation
             color='secondary'
             variant='contained'
-            className='bg-secondary text-primary'
+            sx={{ backgroundColor: '#3F6BFC1A !important', color: '#3F6BFC' }}
           >
             Browse image
           </Button>

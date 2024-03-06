@@ -10,7 +10,11 @@ import { useDataTable } from '@/hooks/useDataTable';
 import CustomDrawer from '@/components/CustomDrawer';
 import { useCatchErrors } from '@/hooks/useCatchErrors';
 import AddVendorForm from '@/components/forms/AddVendorForm';
-import { USERS_COLLECTION, VENDOR_LIST_ROUTE } from '@/constants';
+import {
+  HUB_COLLECTION,
+  USERS_COLLECTION,
+  VENDOR_LIST_ROUTE,
+} from '@/constants';
 import { deleteDocument, deleteUserAccount, updateDocument } from '@/firebase';
 
 interface Iprops {
@@ -48,6 +52,7 @@ const VendorList: React.FC<Iprops> = ({ vendors }) => {
 
     try {
       await deleteDocument(uid, USERS_COLLECTION, photoUrl, VENDOR_LIST_ROUTE);
+      await deleteDocument(uid, HUB_COLLECTION);
       setInitialData((oldData) =>
         oldData.filter((vendor) => vendor.uid !== uid),
       );
@@ -68,7 +73,7 @@ const VendorList: React.FC<Iprops> = ({ vendors }) => {
       return;
     }
 
-    const updatedArea = (await updateDocument(
+    const updatedVendor = (await updateDocument(
       uid,
       USERS_COLLECTION,
       vendor,
@@ -76,16 +81,23 @@ const VendorList: React.FC<Iprops> = ({ vendors }) => {
       updatedEmail,
     )) as Ivendor | undefined;
 
+    (await updateDocument(uid, HUB_COLLECTION, {
+      logoUrl: vendor.photoUrl,
+      vendorName: vendor.displayName,
+      phoneNumber: vendor.mobileNumber,
+      hubType: vendor.type === 'catering' ? 'restaurant' : vendor.type,
+    })) as Ivendor | undefined;
+
     handleClose();
 
-    if (!updatedArea) {
+    if (!updatedVendor) {
       setDefaultError();
       return;
     }
 
     setInitialData((oldData) =>
       oldData.map((vendor) =>
-        vendor.uid === uid ? { ...vendor, ...updatedArea } : vendor,
+        vendor.uid === uid ? { ...vendor, ...updatedVendor } : vendor,
       ),
     );
   };

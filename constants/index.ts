@@ -51,25 +51,25 @@ export const CLIENT_LIST_ROUTE = '/client/list';
 export const planOptions = [
   {
     key: 1,
-    value: 'Basic',
-    label: 'Basic',
+    value: 'basic',
+    label: 'basic',
   },
 ];
 
 export const vendorTypeOptions = [
   {
     key: 1,
-    value: 'Entertainment',
-    label: 'Entertainment',
+    value: 'entertainment',
+    label: 'entertainment',
   },
   {
     key: 2,
-    value: 'Catering',
-    label: 'Catering',
+    value: 'catering',
+    label: 'catering',
   },
   {
     key: 3,
-    value: 'Market',
-    label: 'Market',
+    value: 'market',
+    label: 'market',
   },
 ];

@@ -14,10 +14,16 @@ const FormItemWrapper: React.FC<Iprops> = ({ children, errorMsg, label }) => {
         label={label}
         control={children}
         labelPlacement='top'
-        className='items-start m-0 gap-2 text-gray w-[500px]'
+        sx={{
+          margin: 0,
+          gap: '0.5rem',
+          width: '500px',
+          color: '#5D596C',
+          alignItems: 'start',
+        }}
       />
       {errorMsg && (
-        <Alert severity='error' className='w-[500px]'>
+        <Alert severity='error' sx={{ width: '500px' }}>
           {errorMsg}
         </Alert>
       )}

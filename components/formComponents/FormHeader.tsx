@@ -23,7 +23,10 @@ const FormHeader: React.FC<Iprops> = ({
           color='error'
           onClick={reset}
           variant='outlined'
-          className='bg-red-100 hover:bg-red-200'
+          sx={{
+            borderColor: '#FC3F3F1A !important',
+            backgroundColor: '#FC3F3F1A !important',
+          }}
         >
           Discard
         </Button>
