@@ -36,8 +36,6 @@ const CustomerList: React.FC<Iprops> = ({ customers }) => {
     totalCount,
   } = useDataTable<Icustomer>(initialData, 'displayName');
 
-  React.useEffect(() => console.log({ customerToUpdate }), [customerToUpdate]);
-
   const handleClose = () => setCustomerToUpdate(null);
 
   const handleButtonClick = () => router.push('/customer/add');
