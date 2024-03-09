@@ -54,7 +54,7 @@ const DropzoneComponent: React.FC<Iprops> = ({ file, setFile }) => {
             disableElevation
             color='secondary'
             variant='contained'
-            sx={{ backgroundColor: '#3F6BFC1A', color: '#3F6BFC' }}
+            sx={{ backgroundColor: '#3F6BFC1A !important', color: '#3F6BFC' }}
           >
             Replace image
           </Button>

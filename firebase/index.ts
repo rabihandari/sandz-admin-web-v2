@@ -115,7 +115,9 @@ export const createDocument = async (
 
   const firestore = getFirestore(app);
 
-  const newDocRef = doc(collection(firestore, collectionName), id);
+  const newDocRef = !!id
+    ? doc(collection(firestore, collectionName), id)
+    : doc(collection(firestore, collectionName));
 
   const dataWithId = {
     [identifier]: newDocRef.id,
