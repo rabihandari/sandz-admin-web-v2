@@ -40,6 +40,7 @@ export const DEFAULT_PASSWORD = '123456';
 export const USERS_COLLECTION = 'users';
 export const AREAS_COLLECTION = 'areas';
 export const RESERVATIONS_COLLECTION = 'reservations';
+export const SPOTS_COLLECTION = 'spots';
 export const HUB_COLLECTION = 'hub';
 
 // ROUTES
