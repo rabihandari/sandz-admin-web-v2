@@ -35,7 +35,19 @@ const PrivacyPolicy = () => {
       </Typography>
       <List>
         <ListItem>
-          Your device&apos;s Internet Protocol address (e.g. IP address)
+          Your first name and last name
+        </ListItem>
+        <ListItem>
+          Your mobile number
+        </ListItem>
+        <ListItem>
+          Your Google account email address
+        </ListItem>
+        <ListItem>
+          Your ID photo - Frond and back
+        </ListItem>
+        <ListItem>
+          Your location (Optional). Your location will be used to help vendors reach out to you and deliver you order without running into navigation problems
         </ListItem>
         <ListItem>
           The pages of the Application that you visit, the time and date of
